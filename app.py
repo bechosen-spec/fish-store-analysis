@@ -27,7 +27,7 @@ selected_option = st.sidebar.radio("Choose a section:", options)
 if selected_option == "Home":
     st.title("Welcome to Fish Store Analysis")
     st.write("This app provides an interactive way to explore and analyze data from your fish store.")
-    st.image("fish_store_image.jpg", caption="Fish Store Analysis", use_container_width=True)
+    st.image("image.png", caption="Fish Store Analysis", use_container_width=True)
     st.write("Navigate through the sections to discover insights about trends, products, suppliers, and customer behaviors.")
 
 # Upload dataset
