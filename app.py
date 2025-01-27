@@ -89,21 +89,74 @@ if uploaded_file is not None:
             st.pyplot(fig)
 
         elif selected_option == "Trend Analysis":
-            # Your existing code for Trend Analysis
-            pass
+            st.title("Trend Analysis")
+
+            col1, col2 = st.columns(2)
+
+            with col1:
+                st.markdown("#### Annual Trend of Cost per Unit Supplied")
+                fig, ax = plt.subplots()
+                filtered_df['Cost per Unit Supply (NGN)'].resample('A').mean().plot(ax=ax, color='red', label='Annual Trend')
+                ax.set_title('Annual Trend - Cost per Unit Supplied')
+                ax.set_xlabel('Year')
+                ax.set_ylabel('Mean Cost (NGN)')
+                ax.legend()
+                st.pyplot(fig)
+
+            with col2:
+                st.markdown("#### Annual Trend of Price per Unit Sold")
+                fig, ax = plt.subplots()
+                filtered_df['Price per Unit Sold (NGN)'].resample('A').mean().plot(ax=ax, color='blue', label='Annual Trend')
+                ax.set_title('Annual Trend - Price per Unit Sold')
+                ax.set_xlabel('Year')
+                ax.set_ylabel('Mean Price (NGN)')
+                ax.legend()
+                st.pyplot(fig)
+
+            st.markdown("### Monthly Profit Over Time")
+            fig, ax = plt.subplots(figsize=(10, 6))
+            filtered_df['Profit'].resample('M').sum().plot(ax=ax, color='purple')
+            ax.set_title("Monthly Profit Over Time")
+            ax.set_xlabel("Month")
+            ax.set_ylabel("Total Profit (NGN)")
+            st.pyplot(fig)
 
         elif selected_option == "Product Analysis":
-            # Your existing code for Product Analysis
-            pass
+            st.title("Product Analysis")
+
+            st.markdown("### Product Type Frequency")
+            product_type_freq = filtered_df.groupby('Fish Type')['Quantity Sold (kg)'].sum().reset_index()
+            fig, ax = plt.subplots()
+            sns.barplot(x='Quantity Sold (kg)', y='Fish Type', data=product_type_freq, palette='viridis', ax=ax)
+            ax.set_title("Quantity Sold by Fish Type")
+            st.pyplot(fig)
+
+            st.markdown("### Fish Size Frequency")
+            fish_size_freq = filtered_df.groupby('Fish Size')['Quantity Sold (kg)'].sum().reset_index()
+            fig, ax = plt.subplots()
+            sns.barplot(x='Quantity Sold (kg)', y='Fish Size', data=fish_size_freq, palette='coolwarm', ax=ax)
+            ax.set_title("Quantity Sold by Fish Size")
+            st.pyplot(fig)
 
         elif selected_option == "Brand Supplier Analysis":
-            # Your existing code for Brand Supplier Analysis
-            pass
+            st.title("Brand Supplier Analysis")
+
+            st.markdown("### Profit by Supplier")
+            supplier_profit = filtered_df.groupby('Supplier Information')['Profit'].sum().reset_index()
+            fig, ax = plt.subplots()
+            sns.barplot(x='Profit', y='Supplier Information', data=supplier_profit, palette='Spectral', ax=ax)
+            ax.set_title("Profit by Supplier")
+            st.pyplot(fig)
 
         elif selected_option == "Customer Behavioural Analysis":
-            # Your existing code for Customer Behavioural Analysis
-            pass
+            st.title("Customer Behavioural Analysis")
 
+            st.markdown("### Profit by Customer Type")
+            customer_profit = filtered_df.groupby('Customer Type')['Profit'].sum().reset_index()
+            fig, ax = plt.subplots()
+            sns.barplot(x='Profit', y='Customer Type', data=customer_profit, palette='Blues', ax=ax)
+            ax.set_title("Profit by Customer Type")
+            st.pyplot(fig)
 else:
     if selected_option == "Home":
         st.write("Please upload your dataset to begin exploring other sections.")
